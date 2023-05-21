@@ -1,7 +1,7 @@
 use gvp;
 insert into exams
-values(1,"varun","E.C.E",9.78,'O'),
-      (2,"rakesh","E.C.E",6.78,"B"),
+values(1,"varun",401,9.78,'O'),
+      (2,"rakesh",402,6.78,"B"),
       (3,"kamal","E.C.E",9.78,"O"),
       (4,"aditya","E.C.E",5.33,"D"),
       (5,"meghana","E.C.E",5.33,"D"),
