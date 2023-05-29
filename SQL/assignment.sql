@@ -1,9 +1,16 @@
 use gvp;
 SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
-#1. print coursename which has max number of students
-with numofcourses as (select c.coursename,count(s.roll) as count from students s inner join courses c on s.courseID = c.courseID
+#1. print coursename which has max number of stude
+with numofcourses as (select c.coursename,count(s.roll) as count from studentscourses s inner join courses c on s.courseID = c.courseID
 group by s.courseID) select coursename,count from numofcourses where count=(select max(count) from numofcourses);
+
+select c.coursename from courses c
+inner join studentscourses s on s.courseID=c.courseID
+group by c.coursename
+order by count(s.roll) desc
+limit 2;
+
 
 
 #2. print student name who took more number of courses
