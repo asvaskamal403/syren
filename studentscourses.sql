@@ -1,4 +1,4 @@
-INSERT INTO students
+INSERT INTO studentscourses
 values (1,'CO999'),
        (1,'CO777'),
        (1,'CO888'),
