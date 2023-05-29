@@ -1,0 +1,49 @@
+Reason 1: Familiar languages and environment :
+
+          While Azure Databricks is Spark-based, it allows commonly used programming languages like Python, R, and SQL to be used.
+          These languages are converted in the backend through APIs, to interact with Spark. 
+          This saves users from learning another programming language, such as Scala, for the sole purpose of distributed analytics.
+
+          Familiar programming languages used for machine learning (like Python), statistical analysis (like R), and
+          data processing (like SQL) can easily be used on Spark. Slight modifications of the languages (like package names) are needed 
+          for the language to interact with Spark. The below table gives the name of the language API used.
+
+
+
+Reason 2: Higher productivity and collaboration :
+          a. Production Deployments: Deploying work from Notebooks into production can be done almost instantly by just 
+             tweaking the data sources and output directories.
+
+          b. Workspaces: Databricks creates an environment that provides workspaces for collaboration
+             (between data scientists, engineers, and business analysts), deploys production jobs (including the use of a scheduler), 
+             and has an optimized Databricks engine for running. These interactive workspaces allow multiple members to collaborate for 
+             data model creation, machine learning, and data extraction.
+
+          c. Version Control: Version control is automatically built in, with very frequent changes by all users saved. 
+             Troubleshooting and monitoring is a painless task on Azure Databricks.
+
+Reason 3: Integrates easily with the whole Microsoft stack :
+          Azure Databricks uses the Azure Active Directory (AAD) security framework. Existing credentials authorization can be utilized,
+          with the corresponding security settings. Access and identity control are all done in the same environment. 
+          Using AAD allows easy integration with the entire Azure stack including Data Lake Storage (as a data source or an output),
+          Data Warehouse, Blob storage, and Azure Event Hub.
+
+          For those familiar with Azure, Databricks is a premier alternative to Azure HDInsight and Azure Data Lake Analytics.
+
+Reason 4: Extensive list of data sources :
+          Aside from those Azure-based sources mentioned, Databricks easily connects to sources including on-premise SQL servers, 
+          CSVs, and JSONs. Other data sources include MongoDB, Avro files, and Couchbase. A full list of data sources can be found here.
+
+Reason 5: Suitable for small jobs too :
+          While Azure Databricks is ideal for massive jobs, it can also be used for smaller scale jobs and development/ testing work.
+          This allows Databricks to be used as a one-stop shop for all analytics work. We no longer need to create separate environments 
+          or VMs for development work.
+
+Reason 6: Extensive documentation and support available :
+          While Databricks is a more recent addition to Azure, it has actually existed for many years. Extensive documentation 
+          and support are available for all aspects of Databricks, including the programming languages needed. Documentation exists from 
+          Microsoft (specific for the Azure Databricks platform) and from Databricks (coding specific documentation for SQL, Python, and R).
+
+          Azure Databricks is powerful and cheap. As the current digital revolution continues, using big data technologies will become a
+          necessity for many organizations. Azure Databricks is extremely flexible and easy to get started on, making distributed analytics 
+          much easier to use.
