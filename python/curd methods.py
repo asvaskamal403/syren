@@ -11,24 +11,28 @@ class datamethods:
     def read(self,tablename,columnname): 
         try:
             if(columnname[0]=='*'):
+                self.conn.ping()
                 self.cur.execute(f"select * from {tablename}")
                 output=self.cur.fetchall()
                 for i in output:
                     print(i)
                 self.conn.close()
-            elif(len(columnname)==1):
+            elif(len(columnname)==1 and columnname[0]!='*'):
+                self.conn.ping()
                 self.cur.execute(f"select {columnname[0]} from {tablename}")
                 output=self.cur.fetchall()
                 for i in output:
                     print(i)
                 self.conn.close()
             elif(len(columnname)==2):
+                self.conn.ping()
                 self.cur.execute(f"select {columnname[0]},{columnname[1]} from {tablename}")
                 output=self.cur.fetchall()
                 for i in output:
                     print(i)
                 self.conn.close()  
             elif(len(columnname)==3):
+                self.conn.ping()
                 self.cur.execute(f"select {columnname[0]},{columnname[1]},{columnname[2]} from {tablename}")
                 output=self.cur.fetchall()
                 for i in output:
@@ -57,27 +61,31 @@ class datamethods:
 
     def update(self,tablename,columnname1,value1,columnname2,value2):
         try:
-            self.cur.execute(f"update {tablename} set {columnname1} = {value1} where {columnname2} = {value2}")
+            self.cur.execute(f"update {tablename} set {columnname1} = '{value1}' where {columnname2} = '{value2}'")
             self.conn.commit()
             print("update done successfully")  
             self.conn.close() 
-        #except pymysql.err.ProgrammingError:
-            #print("table doesn't exist") 
-        #except pymysql.err.OperationalError:
-            #print("column not there in table") 
+        except pymysql.err.ProgrammingError:
+            print("table doesn't exist") 
+        except pymysql.err.OperationalError:
+            print("column not there in table") 
         except pymysql.err.DataError:
-            print("sorry! there is an error in data types")              
+            print("sorry! there is an error in data types")  
+        except pymysql.err.InterfaceError:
+            print("sorry!. you are updating primary key,duplicate entries recorded")                
 
-    def delete(self):
-        conn = pymysql.connect(host=self.Host,user=self.User,password=self.Password,db=self.database)
-        cur = conn.cursor()
-        cur.execute("delete from courses where courseID = 'CO111'")
-        conn.commit()
-        cur.execute("select * from courses")
-        output = cur.fetchall()
-        for i in output:
-           print(i)
-        conn.close()
+    def delete(self,tablename,columnname,value):
+        try:
+            self.cur.execute(f"delete from {tablename} where {columnname} = '{value}'")
+            self.conn.commit()
+            print("successfully deleted")
+            self.conn.close()
+        except pymysql.err.ProgrammingError:
+            print("table doesn't exist") 
+        except pymysql.err.OperationalError:
+            print("column not there in table") 
+        except pymysql.err.InterfaceError:
+            print("interface error")    
 
 def main():
     obj=datamethods('localhost','root','Kamal@230167','gvp')
@@ -95,7 +103,6 @@ def main():
             tablename=str(input("please enter the table name : "))
             num=int(input("enter the number of columns : "))
             columnname=[]
-            print("make sure that columns is/are present in tablename")
             for i in range(1,num+1):
                 print("enter columnname:",i)
                 columnname.append(input())
@@ -109,11 +116,14 @@ def main():
                 tablename=str(input("please enter the table name : "))
                 columnname1=str(input("please enter the column that need to be updated : "))
                 value1=input("enter the value to be updated : ")
-                columnname2=str(input("enter the columnname for where condition : "))
-                value2=input("enetr the value that is to be statisfied : ")
+                columnname2=str(input("please enter the columnname wherre it is needed to be updated: "))
+                value2=input("enter the value for where clause: ")           
                 obj.update(tablename,columnname1,value1,columnname2,value2)
         elif choice==4:
-            pass
+            tablename=str(input("please enter the table name : "))
+            columnname=str(input("please enter the column from where it to be deleted : "))
+            value=input("enter the value for where clause : ")
+            obj.delete(tablename,columnname,value)
         elif choice==5:
             print("thankyou! successfully quited from platform")
             break
@@ -123,8 +133,5 @@ def main():
 
 if __name__=="__main__":
     main()
-#read
 # how to do if more than 3 cloumns are selected by users
-
-#insert
-#      
+   
