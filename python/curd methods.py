@@ -10,54 +10,23 @@ class datamethods:
 
     def read(self,tablename,columnname): 
         try:
-            if(columnname[0]=='*'):
-                self.conn.ping()
-                self.cur.execute(f"select * from {tablename}")
-                output=self.cur.fetchall()
-                for i in output:
-                    print(i)
-                self.conn.close()
-            elif(len(columnname)==1 and columnname[0]!='*'):
-                self.conn.ping()
-                self.cur.execute(f"select {columnname[0]} from {tablename}")
-                output=self.cur.fetchall()
-                for i in output:
-                    print(i)
-                self.conn.close()
-            elif(len(columnname)==2):
-                self.conn.ping()
-                self.cur.execute(f"select {columnname[0]},{columnname[1]} from {tablename}")
-                output=self.cur.fetchall()
-                for i in output:
-                    print(i)
-                self.conn.close()  
-            elif(len(columnname)==3):
-                self.conn.ping()
-                self.cur.execute(f"select {columnname[0]},{columnname[1]},{columnname[2]} from {tablename}")
-                output=self.cur.fetchall()
-                for i in output:
-                    print(i)
-                self.conn.close()  
-        except pymysql.err.ProgrammingError:
-            print("table doesn't exist")    
-        except pymysql.err.OperationalError:
-            print("column not there in table")
-        except pymysql.err.InterfaceError:
-            print("interface error")    
+            self.conn.ping()
+            self.cur.execute(f"select {columnname[:len(columnname)-1]} from {tablename}")
+            output=self.cur.fetchall()
+            for i in output:
+                print(i)
+            self.conn.close()
+        except Exception as e :
+            print(e.args[1])
+
     def insert(self,tablename,values):
         try:
             self.cur.execute(f"insert into {tablename} values {values}")
             self.conn.commit()
             print("insertion done successfully")
             self.conn.close()
-        except pymysql.err.IntegrityError:
-            print("sorry! Duplicate entry")
-        except pymysql.err.ProgrammingError:
-            print("table doesn't exist") 
-        except pymysql.err.OperationalError:
-            print("column not there in table") 
-        except pymysql.err.DataError:
-            print("sorry! there is an error in data types")              
+        except Exception as e :
+            print(e.args[1])    
 
     def update(self,tablename,columnname1,value1,columnname2,value2):
         try:
@@ -65,27 +34,16 @@ class datamethods:
             self.conn.commit()
             print("update done successfully")  
             self.conn.close() 
-        except pymysql.err.ProgrammingError:
-            print("table doesn't exist") 
-        except pymysql.err.OperationalError:
-            print("column not there in table") 
-        except pymysql.err.DataError:
-            print("sorry! there is an error in data types")  
-        except pymysql.err.InterfaceError:
-            print("sorry!. you are updating primary key,duplicate entries recorded")                
-
+        except Exception as e :
+            print(e.args[1])
     def delete(self,tablename,columnname,value):
         try:
             self.cur.execute(f"delete from {tablename} where {columnname} = '{value}'")
             self.conn.commit()
             print("successfully deleted")
             self.conn.close()
-        except pymysql.err.ProgrammingError:
-            print("table doesn't exist") 
-        except pymysql.err.OperationalError:
-            print("column not there in table") 
-        except pymysql.err.InterfaceError:
-            print("interface error")    
+        except Exception as e :
+            print(e.args[1])
 
 def main():
     obj=datamethods('localhost','root','Kamal@230167','gvp')
@@ -102,10 +60,10 @@ def main():
         if choice==1:
             tablename=str(input("please enter the table name : "))
             num=int(input("enter the number of columns : "))
-            columnname=[]
+            columnname=""
             for i in range(1,num+1):
                 print("enter columnname:",i)
-                columnname.append(input())
+                columnname=columnname+str(input())+","
             obj.read(tablename,columnname)
         elif choice==2:
             tablename=str(input("please enter the table name : "))
@@ -125,12 +83,12 @@ def main():
             value=input("enter the value for where clause : ")
             obj.delete(tablename,columnname,value)
         elif choice==5:
-            print("thankyou! successfully quited from platform")
             break
         else:
             print("invalid choice. please select between 1 - 5 ")
-            print("thank you")
 
+    print("thankyou! successfully quited from platform")
+    
 if __name__=="__main__":
     main()
 # how to do if more than 3 cloumns are selected by users
