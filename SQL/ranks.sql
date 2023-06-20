@@ -1,4 +1,5 @@
 use gvp;
+drop table ranks;
 create table ranks(courseID varchar(255) not null primary key,
 			  offeredby varchar(40) not null,
               coursename varchar(40) not null,

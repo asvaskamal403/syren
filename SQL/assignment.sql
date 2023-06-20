@@ -1,7 +1,7 @@
 use gvp;
 SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
-#1. print coursename which has max number of stude
+#1. print coursename which has max number of students
 with numofcourses as (select c.coursename,count(s.roll) as count from studentscourses s inner join courses c on s.courseID = c.courseID
 group by s.courseID) select coursename,count from numofcourses where count=(select max(count) from numofcourses);
 
@@ -11,16 +11,16 @@ group by c.coursename
 order by count(s.roll) desc
 limit 2;
 
-
+select count(courseID) as count,roll from studentscourses group by roll;
 
 #2. print student name who took more number of courses
-with studentdata as (select count(courseID) as count,roll from students group by roll) select stu.name, 
+with studentdata as (select count(courseID) as count,roll from studentscourses group by roll) select stu.name, 
 s.count from studentdetails stu inner join studentdata s on stu.roll=s.roll
 where s.count=(select max(count) from studentdata);
 
 #3. print student name who pays highest fee
 with studentfee as (select sum(c.cost) as total,
-s.roll from courses c inner join students s on c.courseID=s.CourseID group by s.roll) select s.name,
+s.roll from courses c inner join studentscourses s on c.courseID=s.CourseID group by s.roll) select s.name,
 stu.total from studentfee stu inner join studentdetails s on stu.roll = s.roll where total=(select max(total) from studentfee);
 
 
@@ -36,7 +36,7 @@ select courseID,coursename, month,salevalue, lead(salevalue,1) over (partition b
 nextmonthsalevalue from coursesales;
 
 #LAG() function which is very useful in case the current row values need to be 
-compared with the data/value of the previous record or any record before the previous record.
+#compared with the data/value of the previous record or any record before the previous record.
 
 select courseID,coursename, month,salevalue, lag(salevalue,1) over (partition by courseID order by month) 
 prevmonthsalevalue from coursesales;

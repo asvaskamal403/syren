@@ -47,7 +47,7 @@ class datamethods:
 
 def main():
     obj=datamethods('localhost','root','Kamal@230167','gvp')
-
+    
     while True:
         print("select 1 if you want to read the table")
         print("select 2 if you want to insert into table")
@@ -91,5 +91,5 @@ def main():
     
 if __name__=="__main__":
     main()
-# how to do if more than 3 cloumns are selected by users
+
    

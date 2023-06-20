@@ -1,0 +1,9 @@
+courseID,offeredby,coursename,durationinyrs,cost
+CO111,AU,azure,3,25000
+CO555,MICROSOFT,sql,5,1000
+CO612,CISCO,c#,1,50000
+CO666,JNTU,databricks,2,5000
+CO750,CISCO,css,3,75000
+CO777,KEKA,databricks,4,10000
+CO888,BABA,azure,1,20000
+CO999,BABA,sql,3,125000
