@@ -33,3 +33,5 @@ def main():
 
         if choice == 3:
             pass
+
+main()
