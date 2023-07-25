@@ -1,8 +1,12 @@
+
 class studentregister:
     def __init__(self):
-        pass
-    def register(registername):
-        registername = []
+        self.lists = {}
+    def register(self,name):
+        new_list = []
+        self.lists[name] = new_list
+        print(f"List '{name}' has been created.")
+
     def insertnames(registername,n):
         for i in range(n):
             registername.append(str(input().split())) 
@@ -24,12 +28,12 @@ def main():
         choice = int(input("enter the number: "))
 
         if choice == 1:
-            registername = str(input("please enter the register name: "))
-            obj.register(registername)
+            name = str(input("please enter the register name: "))
+            obj.register(name)
 
         if choice == 2:
             n = int(input("enter the number of students: "))
-            obj.insertnames(registername,n)
+            obj.insertnames(name,n)
 
         if choice == 3:
             pass
